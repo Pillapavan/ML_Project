@@ -1,5 +1,5 @@
 import sys
-from logger import logging
+from src.logger import logging
 
 def handle_exception(error, error_details: sys):
     """Handles exceptions by printing an error message and exiting the program."""
