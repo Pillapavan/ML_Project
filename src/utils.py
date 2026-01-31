@@ -1,11 +1,14 @@
-import numpy as np
-import pandas as pd
 import os
 import sys
 import dill
+import pickle
 from src.exception import CustomException
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score
+from sklearn.model_selection import RandomizedSearchCV
 from src.logger import logging
+import warnings
+warnings.filterwarnings("ignore")
 
 def save_train_test(df, raw_path: str,train_path: str, test_path: str):
     try:
@@ -32,4 +35,32 @@ def save_object(file_path, obj):
         raise CustomException(e, sys)
     
     
+def evaluate_models(X_train, y_train, X_test, y_test, models, params):
+    try:
+        report = {}
+        
+        for i in range(len(models)):
+            model = list(models.values())[i]
+            param = params[list(models.keys())[i]]
+            logging.info(f"Training model started: {list(models.keys())[i]}")
+            rs = RandomizedSearchCV(model, param, cv=5, n_iter=30, n_jobs=-1, verbose=2, scoring='r2', random_state=42)
+            rs.fit(X_train, y_train)
+            model.set_params(**rs.best_params_)
+            model.fit(X_train, y_train)
+            y_test_pred = model.predict(X_test)
+            test_model_score = r2_score(y_test, y_test_pred)
+            report[list(models.keys())[i]] = test_model_score
+            logging.info(f"Training model completed: {list(models.keys())[i]} with R2 score: {test_model_score}")
+        return report
+    except Exception as e:  
+        logging.info(f"Error occurred during model evaluation: {CustomException(e, sys)}")
+        raise CustomException(e, sys)
     
+def load_object(file_path):
+    try:
+        with open(file_path, 'rb') as file_obj:
+            return pickle.load(file_obj)
+    except Exception as e:
+        logging.info(f"Error occurred while loading object: {CustomException(e, sys)}")
+        raise CustomException(e, sys)
+            

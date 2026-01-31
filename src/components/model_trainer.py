@@ -101,12 +101,13 @@ class ModelTrainer:
             model_report:dict=evaluate_models(X_train,y_train,X_test,y_test,models,param_grids)
             logging.info(f"Model report: {model_report}")
             best_model_value = max(sorted(model_report.values()))
-            best_model = list(model_report.keys())[
+            best_model_path = list(model_report.keys())[
                 list(model_report.values()).index(best_model_value)
             ]
-            logging.info(f"Best model: {best_model}")
+            best_model = models[best_model_path]
+            logging.info(f"Best model: {best_model_path}")
             save_object(file_path=self.model_trainer_config.trained_model_file_path,obj=best_model)
-            return {best_model: best_model_value}
+            return {best_model_path: best_model_value}
         except Exception as e:
             logging.warning(CustomException(e,sys))
             raise CustomException(e,sys)
