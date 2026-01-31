@@ -2,14 +2,12 @@ from flask import Flask,request,render_template
 from src.pipeline.predict_pipeline import CustomData,PredictPipeline
 
 
-app = Flask(__name__)
+application = Flask(__name__)
 
-@app.route('/')
-def index():
-    return "Hello, World!"
+app = application  # for AWS deployment
 
 ## Route for a home page
-@app.route('/predictdata',methods=['GET','POST'])
+@app.route('/',methods=['GET','POST'])
 def predict_datapoint():
     if request.method=='GET':
         return render_template('home.html')
