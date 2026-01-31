@@ -36,6 +36,7 @@ The trained model and preprocessing pipeline are saved as artifacts and reused d
 
 ## Project Structure
 
+```
 ML_Project/
 │
 ├── app.py                         # Flask application
@@ -62,6 +63,8 @@ ML_Project/
 │
 ├── requirements.txt
 └── README.md
+```
+
 
 
 ## Training Pipeline (High Level)
@@ -122,27 +125,32 @@ Input features:
 
 ## How to Run the Project Locally
 
-1. Clone the repository
-
+### 1. Clone the repository
+```
 git clone https://github.com/Pillapavan/ML_Project.git
 cd ML_Project
+```
 
-2. Create and activate virtual environment
-
+### 2. Create and activate virtual environment
+```
 python -m venv venv
 venv\Scripts\activate
+```
 
-3. Install dependencies
-
+### 3. Install dependencies
+```
 pip install -r requirements.txt
+```
 
-4. Run Flask app
-
+### 4. Run Flask app
+```
 python app.py
+```
 
-5. Open browser
-
+### 5. Open browser
+```
 http://127.0.0.1:5000/
+```
 
 ## Author
 
