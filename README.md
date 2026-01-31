@@ -36,6 +36,7 @@ The trained model and preprocessing pipeline are saved as artifacts and reused d
 
 ## Project Structure
 
+```
 ML_Project/
 │
 ├── app.py                         # Flask application
@@ -62,6 +63,8 @@ ML_Project/
 │
 ├── requirements.txt
 └── README.md
+```
+
 
 
 ## Training Pipeline (High Level)
